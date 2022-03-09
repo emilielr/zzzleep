@@ -101,6 +101,12 @@
             </LinearLayout>
         </TableRow>
 
+        <!--Ui component for our bar chart-->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

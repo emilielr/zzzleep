@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.SettingsFragment">
+    android:layout_margin="16dp"
+    tools:context=".ui.settings.SettingsFragment"
+    android:id="@+id/settings_layout"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -21,8 +22,8 @@
 
         <EditText
             android:id="@+id/email_subject"
-            android:layout_width="371dp"
-            android:layout_height="68dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:minHeight="48dp" />
 
         <TextView
@@ -34,7 +35,7 @@
         <TimePicker
             android:id="@+id/bedtime_subject"
             android:layout_width="match_parent"
-            android:layout_height="151dp"
+            android:layout_height="130dp"
             android:timePickerMode="spinner" />
 
         <TextView
@@ -44,7 +45,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="211dp">
+            android:layout_height="209dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -56,28 +57,28 @@
                     android:id="@+id/checkbox_monday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckboxClicked"
+                    android:checked="false"
                     android:text="@string/monday" />
 
                 <CheckBox
                     android:id="@+id/checkbox_tuesday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckboxClicked"
+                    android:checked="false"
                     android:text="@string/tuesday" />
 
                 <CheckBox
                     android:id="@+id/checkbox_wednesday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckboxClicked"
+                    android:checked="false"
                     android:text="@string/wednesday" />
 
                 <CheckBox
                     android:id="@+id/checkbox_thursday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckboxClicked"
+                    android:checked="false"
                     android:text="@string/thursday" />
 
             </LinearLayout>
@@ -92,21 +93,21 @@
                     android:id="@+id/checkbox_friday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckboxClicked"
+                    android:checked="false"
                     android:text="@string/friday" />
 
                 <CheckBox
                     android:id="@+id/checkbox_saturday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckboxClicked"
+                    android:checked="false"
                     android:text="@string/saturday" />
 
                 <CheckBox
                     android:id="@+id/checkbox_sunday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckboxClicked"
+                    android:checked="false"
                     android:text="@string/sunday" />
             </LinearLayout>
 
@@ -116,7 +117,7 @@
         <Button
             android:id="@+id/button2"
             android:layout_width="match_parent"
-            android:layout_height="59dp"
+            android:layout_height="60dp"
             android:text="Save changes" />
 
 

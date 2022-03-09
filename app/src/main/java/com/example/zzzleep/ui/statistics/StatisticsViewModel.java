@@ -1,12 +1,8 @@
 package com.example.zzzleep.ui.statistics;
 
-import android.os.Bundle;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.zzzleep.R;
 
 public class StatisticsViewModel extends ViewModel {
 

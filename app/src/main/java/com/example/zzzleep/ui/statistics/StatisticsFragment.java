@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,14 +25,9 @@ public class StatisticsFragment extends Fragment {
     private FragmentStatisticsBinding binding;
 
     BarChart barChart;
-
-    // variable for our bar data.
     BarData barData;
-
-    // variable for our bar data set.
     BarDataSet barDataSet;
 
-    // array list for storing entries.
     ArrayList barEntriesArrayList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,

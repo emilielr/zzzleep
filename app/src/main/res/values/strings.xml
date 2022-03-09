@@ -2,12 +2,22 @@
     <string name="app_name">zzzleep</string>
     <string name="title_statistics">Statistics</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-
     <string name="statistics_average">Average time slept this week</string>
     <string name="statistics_total_weekly">Total time slept this week</string>
     <string name="statistics_average_time">6.5H</string>
     <string name="statistics_total_weekly_time">38H</string>
     <string name="bar_chart_week">Week for week</string>
     <string name="bar_chart_date">14.-20 February</string>
+    <string name="title_settings">Settings</string>
+    <string name="email_subject_label">Name</string>
+    <string name="bedtime_subject_label">Bedtime</string>
+    <string name="alarm">Alarm is set for these days:</string>
+    <string name="label_checkboxes">Alarm</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 </resources>

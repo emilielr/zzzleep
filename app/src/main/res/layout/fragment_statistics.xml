@@ -44,6 +44,12 @@
                     android:textAlignment="center"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/output"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="" />
             </LinearLayout>
 
             <LinearLayout

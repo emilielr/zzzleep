@@ -56,6 +56,8 @@ public class SettingsFragment extends Fragment {
 
         TimePicker time = root.findViewById(R.id.bedtime_subject);
 
+        time.setHour(prefs.getInt("hour", 00));
+        time.setMinute(prefs.getInt("minute", 00));
 
         save.setOnClickListener(new View.OnClickListener()
         {
@@ -71,7 +73,8 @@ public class SettingsFragment extends Fragment {
                 editor.putBoolean("friday", fri.isChecked());
                 editor.putBoolean("saturday", sat.isChecked());
                 editor.putBoolean("sunday", sun.isChecked());
-
+                editor.putInt("minute",time.getMinute());
+                editor.putInt("hour",time.getHour());
                 editor.apply();
 
             };

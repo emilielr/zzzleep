@@ -75,14 +75,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
 
 
-
-        //Start timer
-        //timerHere.setBase(SystemClock.elapsedRealtime());
-        //timerHere.start();
-        //btnTimerEnd.animate().alpha(1).translationY(-80).setDuration(300).start();
-        //btnTimerStart.animate().alpha(0).setDuration(300).start();
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

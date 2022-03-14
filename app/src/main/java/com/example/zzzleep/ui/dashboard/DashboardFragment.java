@@ -24,15 +24,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private FragmentDashboardBinding binding;
 
 
-    //@Override
-    //public void onClick(View v) {
-        // implements your things
-    //}
-
-
-    //btnTimerStart.setOnClickListener(new View.OnClickListener() {
-
-    //});
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,13 +34,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //View myView = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        //btnTimerStart = (Button) myView.findViewById(R.id.counter_button_start);
-        //btnTimerEnd = (Button) myView.findViewById(R.id.counter_button_end);
-        //timerHere = (Chronometer) myView.findViewById(R.id.timerHere);
-        //btnTimerStart.setOnClickListener(this);
-        //btnTimerEnd.setOnClickListener(this);
-        //timerHere.setOnClickListener(this);
+
 
         mView = inflater.inflate(R.layout.fragment_dashboard, container,false);
         btnTimerStart=(Button)mView.findViewById(R.id.counter_button_start);

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">zzzleep</string>
     <string name="title_statistics">Statistics</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Timer</string>
     <string name="statistics_average">Average time slept this week</string>
     <string name="statistics_total_weekly">Total time slept this week</string>
     <string name="statistics_average_time">6.5H</string>

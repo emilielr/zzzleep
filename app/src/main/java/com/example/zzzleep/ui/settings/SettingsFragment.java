@@ -1,13 +1,16 @@
 package com.example.zzzleep.ui.settings;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,52 +22,70 @@ import com.example.zzzleep.databinding.FragmentSettingsBinding;
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
-    CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
 
-    public void onClick(View view) {
-        // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
-
-        // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.checkbox_monday:
-                if (checked)
-                    monday = (CheckBox)view.findViewById(R.id.checkbox_monday);
-                    monday.setText("heihei");
-                break;
-            case R.id.checkbox_tuesday:
-                if (checked)
-                    tuesday = (CheckBox)view.findViewById(R.id.checkbox_tuesday);
-                tuesday.setText("heihei tysdag");
-                break;
-        }
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SettingsViewModel settingsViewModel =
-                new ViewModelProvider(this).get(SettingsViewModel.class);
 
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(root.getContext());
+        SharedPreferences.Editor editor = prefs.edit();
+
+        Button save = root.findViewById(R.id.button);
+
         CheckBox mon = root.findViewById(R.id.checkbox_monday);
-        mon.setOnClickListener(this::onClick) ;
-        CheckBox tus = root.findViewById(R.id.checkbox_tuesday);
-        tus.setOnClickListener(this::onClick) ;
+        CheckBox tue = root.findViewById(R.id.checkbox_tuesday);
         CheckBox wed = root.findViewById(R.id.checkbox_wednesday);
-        wed.setOnClickListener(this::onClick) ;
         CheckBox thur = root.findViewById(R.id.checkbox_thursday);
-        thur.setOnClickListener(this::onClick);
         CheckBox fri = root.findViewById(R.id.checkbox_friday);
-        fri.setOnClickListener(this::onClick) ;
         CheckBox sat = root.findViewById(R.id.checkbox_saturday);
-        sat.setOnClickListener(this::onClick) ;
         CheckBox sun = root.findViewById(R.id.checkbox_sunday);
-        sun.setOnClickListener(this::onClick) ;
+
+        mon.setChecked(prefs.getBoolean("monday", false));
+        tue.setChecked(prefs.getBoolean("tuesday", false));
+        wed.setChecked(prefs.getBoolean("wednesday", false));
+        thur.setChecked(prefs.getBoolean("thursday", false));
+        fri.setChecked(prefs.getBoolean("friday", false));
+        sun.setChecked(prefs.getBoolean("sunday", false));
+
+
+        EditText editName = root.findViewById(R.id.name);
+        editName.setText(prefs.getString("name", ""));
+
+        TimePicker time = root.findViewById(R.id.bedtime_subject);
+
+        time.setHour(prefs.getInt("hour", 00));
+        time.setMinute(prefs.getInt("minute", 00));
+
+        save.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                editor.putString("name", editName.getText().toString());
+
+                editor.putBoolean("monday", mon.isChecked());
+                editor.putBoolean("tuesday", tue.isChecked());
+                editor.putBoolean("wednesday", wed.isChecked());
+                editor.putBoolean("thursday", thur.isChecked());
+                editor.putBoolean("friday", fri.isChecked());
+                editor.putBoolean("saturday", sat.isChecked());
+                editor.putBoolean("sunday", sun.isChecked());
+                editor.putInt("minute",time.getMinute());
+                editor.putInt("hour",time.getHour());
+                editor.apply();
+
+            };
+
+        });
 
         return root;
     }
+
+
+
 
     @Override
     public void onDestroyView() {

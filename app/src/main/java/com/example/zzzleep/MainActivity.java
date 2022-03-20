@@ -1,6 +1,8 @@
 package com.example.zzzleep;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -12,14 +14,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
 import com.example.zzzleep.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        prefs.registerOnSharedPreferenceChangeListener(this::onSharedPreferenceChanged);
     }
+
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        Log.d(this.getLocalClassName(), key + " changed");
+    }
+
+
 }

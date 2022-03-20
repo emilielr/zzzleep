@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -37,8 +36,6 @@ public class StatisticsFragment extends Fragment {
 
     ArrayList barEntriesArrayList;
 
-    TextView output;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         StatisticsViewModel homeViewModel =
@@ -49,18 +46,16 @@ public class StatisticsFragment extends Fragment {
 
         barChart = root.findViewById(R.id.barChart);
 
-        // calling method to get bar entries.
-        getBarEntries();
+        createFileData();
+        ArrayList<SleepObject> data = getFileData();
+        getBarEntries(data);
 
         // creating a new bar data set.
-        barDataSet = new BarDataSet(barEntriesArrayList, "Geeks for Geeks");
+        barDataSet = new BarDataSet(barEntriesArrayList, "Sleep pattern");
 
-        // creating a new bar data and
-        // passing our bar data set.
+        // creating a new bar data and passing our bar data set.
         barData = new BarData(barDataSet);
 
-        // below line is to set data
-        // to our bar chart.
         barChart.setData(barData);
 
         // adding color to our bar data set.
@@ -72,28 +67,6 @@ public class StatisticsFragment extends Fragment {
         // setting text size
         barDataSet.setValueTextSize(16f);
         barChart.getDescription().setEnabled(false);
-
-        createFileData();
-
-        // Read file data
-        output = root.findViewById(R.id.output);
-
-        ArrayList<SleepObject> dataList = new ArrayList<>();
-        try (FileInputStream fi = (getContext().openFileInput("data.ser"));
-             ObjectInputStream os = new ObjectInputStream(fi)) {
-            dataList = (ArrayList<SleepObject>)os.readObject();
-
-            String output_text = "";
-            for (SleepObject obj : dataList) {
-                output_text += String.format("Dato: %s. Antall timer: %o", obj.getDate(), obj.getHours());
-            }
-
-            TextView textView = root.findViewById(R.id.output);
-            textView.setText(output_text);
-
-        } catch (Exception e) {
-            Log.e(this.getActivity().getLocalClassName(), "Exception reading file", e);
-        }
 
         return root;
     }
@@ -125,19 +98,32 @@ public class StatisticsFragment extends Fragment {
         }
     }
 
+    private ArrayList<SleepObject> getFileData() {
+        ArrayList<SleepObject> dataList = new ArrayList<>();
 
-    private void getBarEntries() {
-        // creating a new array list
+        try (FileInputStream fi = (getContext().openFileInput("data.ser"));
+             ObjectInputStream os = new ObjectInputStream(fi)) {
+            dataList = (ArrayList<SleepObject>)os.readObject();
+
+        } catch (Exception e) {
+            Log.e(this.getActivity().getLocalClassName(), "Exception reading file", e);
+        }
+        return dataList;
+    }
+
+
+    private void getBarEntries(ArrayList<SleepObject> data) {
         barEntriesArrayList = new ArrayList<>();
 
         // adding new entry to our array list with bar
         // entry and passing x and y axis value to it.
-        barEntriesArrayList.add(new BarEntry(1f, 4));
-        barEntriesArrayList.add(new BarEntry(2f, 6));
-        barEntriesArrayList.add(new BarEntry(3f, 8));
-        barEntriesArrayList.add(new BarEntry(4f, 2));
-        barEntriesArrayList.add(new BarEntry(5f, 4));
-        barEntriesArrayList.add(new BarEntry(6f, 1));
+        barEntriesArrayList.add(new BarEntry(1f, data.get(0).getHours()));
+        barEntriesArrayList.add(new BarEntry(2f, data.get(1).getHours()));
+        barEntriesArrayList.add(new BarEntry(3f, data.get(2).getHours()));
+        barEntriesArrayList.add(new BarEntry(4f, data.get(3).getHours()));
+        barEntriesArrayList.add(new BarEntry(5f, data.get(4).getHours()));
+        barEntriesArrayList.add(new BarEntry(6f, data.get(5).getHours()));
+        barEntriesArrayList.add(new BarEntry(7f, data.get(6).getHours()));
     }
 
     @Override

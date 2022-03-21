@@ -1,8 +1,16 @@
 package com.example.zzzleep.ui.settings;
 
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +21,19 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.zzzleep.R;
 import com.example.zzzleep.databinding.FragmentSettingsBinding;
 
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
+
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +59,7 @@ public class SettingsFragment extends Fragment {
         wed.setChecked(prefs.getBoolean("wednesday", false));
         thur.setChecked(prefs.getBoolean("thursday", false));
         fri.setChecked(prefs.getBoolean("friday", false));
+        sat.setChecked(prefs.getBoolean("saturday", false));
         sun.setChecked(prefs.getBoolean("sunday", false));
 
 
@@ -58,6 +70,8 @@ public class SettingsFragment extends Fragment {
 
         time.setHour(prefs.getInt("hour", 00));
         time.setMinute(prefs.getInt("minute", 00));
+
+
 
         save.setOnClickListener(new View.OnClickListener()
         {
@@ -77,12 +91,57 @@ public class SettingsFragment extends Fragment {
                 editor.putInt("hour",time.getHour());
                 editor.apply();
 
+                Context context = v.getContext();
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.HOUR_OF_DAY, 16);
+                calendar.set(Calendar.MINUTE, 28);
+
+                AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent(context, AlarmReceiver.class);
+                intent.putExtra("myAction", "mDoNotify");
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
+                if(mon.isChecked()){
+                    calendar.set(Calendar.DAY_OF_WEEK, 2);
+                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
+                if(tue.isChecked()){
+                    calendar.set(Calendar.DAY_OF_WEEK, 3);
+                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
+                if(wed.isChecked()){
+                    calendar.set(Calendar.DAY_OF_WEEK, 4);
+                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
+                if(thur.isChecked()){
+                    calendar.set(Calendar.DAY_OF_WEEK, 5);
+                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
+                if(fri.isChecked()){
+                calendar.set(Calendar.DAY_OF_WEEK, 6);
+                am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
+                if(sat.isChecked()){
+                    calendar.set(Calendar.DAY_OF_WEEK, 7);
+                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
+                if(sun.isChecked()){
+                    calendar.set(Calendar.DAY_OF_WEEK, 1);
+                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
+
             };
 
         });
 
+
+
+
         return root;
     }
+
 
 
 

@@ -14,15 +14,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.zzzleep.R;
 import com.example.zzzleep.databinding.FragmentStatisticsBinding;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.io.FileInputStream;
@@ -172,8 +169,6 @@ public class StatisticsFragment extends Fragment {
     private void getBarEntries(ArrayList<SleepObject> data) {
         barEntriesArrayList = new ArrayList<>();
 
-        // adding new entry to our array list with bar
-        // entry and passing x and y axis value to it.
         barEntriesArrayList.add(new BarEntry(1f, data.get(0).getHours()));
         barEntriesArrayList.add(new BarEntry(2f, data.get(1).getHours()));
         barEntriesArrayList.add(new BarEntry(3f, data.get(2).getHours()));

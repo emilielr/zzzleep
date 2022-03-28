@@ -86,6 +86,7 @@ public class StatisticsFragment extends Fragment {
         xAxis.setDrawGridLines(false);
         xAxis.setLabelCount(7);
         xAxis.setValueFormatter(new XAxisFormatter());
+        xAxis.setTextSize(14f);
 
         YAxis rightAxis = barChart.getAxisRight();
         rightAxis.setDrawAxisLine(false);
@@ -96,6 +97,7 @@ public class StatisticsFragment extends Fragment {
         rightAxis.setLabelCount(6);
         rightAxis.setValueFormatter(new RightYAxisFormatter());
         rightAxis.setGranularity(2f);
+        rightAxis.setTextSize(14f);
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setDrawAxisLine(false);

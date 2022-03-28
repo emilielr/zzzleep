@@ -14,18 +14,24 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.zzzleep.R;
 import com.example.zzzleep.databinding.FragmentStatisticsBinding;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class StatisticsFragment extends Fragment {
 
@@ -83,6 +89,8 @@ public class StatisticsFragment extends Fragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
+        xAxis.setLabelCount(7);
+        xAxis.setValueFormatter(new XAxisFormatter());
 
         YAxis rightAxis = barChart.getAxisRight();
         rightAxis.setDrawAxisLine(false);
@@ -90,6 +98,8 @@ public class StatisticsFragment extends Fragment {
         rightAxis.setAxisMinimum(0);
         rightAxis.setAxisMaximum(10);
         rightAxis.setGridLineWidth(1f);
+        rightAxis.setLabelCount(6);
+        rightAxis.setValueFormatter(new RightYAxisFormatter());
         rightAxis.setGranularity(2f);
 
         YAxis leftAxis = barChart.getAxisLeft();
@@ -101,17 +111,7 @@ public class StatisticsFragment extends Fragment {
         leftAxis.setGranularity(2f);
 
         Legend legend = barChart.getLegend();
-        //setting the shape of the legend form to line, default square shape
-        legend.setForm(Legend.LegendForm.LINE);
-        //setting the text size of the legend
-        legend.setTextSize(11f);
-        //setting the alignment of legend toward the chart
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        //setting the stacking direction of legend
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        //setting the location of legend outside the chart, default false if not set
-        legend.setDrawInside(false);
+        legend.setEnabled(false);
 
     }
 
@@ -153,6 +153,21 @@ public class StatisticsFragment extends Fragment {
             Log.e(this.getActivity().getLocalClassName(), "Exception reading file", e);
         }
         return dataList;
+    }
+
+    public class RightYAxisFormatter extends ValueFormatter {
+        @Override
+        public String getFormattedValue(float value) {
+            return ((int) value + "h");
+        }
+    }
+
+    public class XAxisFormatter extends ValueFormatter {
+        final List<String> weekdays = Arrays.asList("mon.", "tue.", "wed.", "thur.", "fri", "sat.", "sun.");
+        @Override
+        public String getFormattedValue(float value) {
+            return (weekdays.get((int) value - 1));
+        }
     }
 
 

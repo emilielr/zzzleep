@@ -72,15 +72,13 @@ public class StatisticsFragment extends Fragment {
 
     // function for stying the outlook of the bar chart
     private void initBarDataSet(BarDataSet barDataSet){
-        barDataSet.setColors(R.color.dark_blue);
-        //showing the value of the bar, default true if not set
+        barChart.setScaleEnabled(false);
+        barChart.setTouchEnabled(false);
         barDataSet.setDrawValues(false);
-        //setting the text size of the value of the bar
-        barDataSet.setValueTextSize(16f);
-        barDataSet.setValueTextColor(R.color.black);
+        barDataSet.setColor(getContext().getColor(R.color.blue_background));
         barChart.getDescription().setEnabled(false);
-        barData.setBarWidth(0.9f);
         barChart.setFitBars(true);
+
     }
 
     private void initBarChart() {

@@ -1,5 +1,6 @@
 package com.example.zzzleep;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 
+import com.example.zzzleep.ui.settings.RegisterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         prefs.registerOnSharedPreferenceChangeListener(this::onSharedPreferenceChanged);
+
+        Boolean remember = prefs.getBoolean("remember", false);
+
+
+        if(!remember) {
+            Intent intent = new Intent(binding.getRoot().getContext(), RegisterActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {

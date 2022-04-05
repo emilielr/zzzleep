@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,6 +75,10 @@ public class SettingsFragment extends Fragment {
 
 
 
+
+
+
+
         save.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -91,57 +97,73 @@ public class SettingsFragment extends Fragment {
                 editor.putInt("hour",time.getHour());
                 editor.apply();
 
-                Context context = v.getContext();
 
+                Context context = v.getContext();
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(System.currentTimeMillis());
-                calendar.set(Calendar.HOUR_OF_DAY, 16);
-                calendar.set(Calendar.MINUTE, 28);
+
+                calendar.set(Calendar.HOUR_OF_DAY, prefs.getInt("hour", 00));
+                calendar.set(Calendar.MINUTE, prefs.getInt("minute", 00));
+                calendar.set(Calendar.SECOND, 00);
 
                 AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
                 Intent intent = new Intent(context, AlarmReceiver.class);
-                intent.putExtra("myAction", "mDoNotify");
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-                if(mon.isChecked()){
-                    calendar.set(Calendar.DAY_OF_WEEK, 2);
-                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
-                if(tue.isChecked()){
-                    calendar.set(Calendar.DAY_OF_WEEK, 3);
-                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
-                if(wed.isChecked()){
-                    calendar.set(Calendar.DAY_OF_WEEK, 4);
-                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
-                if(thur.isChecked()){
-                    calendar.set(Calendar.DAY_OF_WEEK, 5);
-                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
-                if(fri.isChecked()){
-                calendar.set(Calendar.DAY_OF_WEEK, 6);
-                am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
-                if(sat.isChecked()){
-                    calendar.set(Calendar.DAY_OF_WEEK, 7);
-                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
-                if(sun.isChecked()){
-                    calendar.set(Calendar.DAY_OF_WEEK, 1);
-                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
 
-            };
+                    if (mon.isChecked()) {
+                        setAlarm(2, calendar, am, intent, context);
+                    }else{
+                        cancelAlarm(2, am, intent, context);
+                    }
+                    if (tue.isChecked()) {
+                        setAlarm(3, calendar, am, intent, context);
+                    }else{
+                        cancelAlarm(3, am, intent, context);
+                    }
+                    if (wed.isChecked()) {
+                        setAlarm(4, calendar, am, intent, context);
+                    }else{
+                        cancelAlarm(4, am, intent, context);
+                    }
+                    if (thur.isChecked()) {
+                        setAlarm(5, calendar, am, intent, context);
+                    }else{
+                        cancelAlarm(5, am, intent, context);
+                    }
+                    if (fri.isChecked()) {
+                        setAlarm(6, calendar, am, intent, context);
+                    }else{
+                        cancelAlarm(6, am, intent, context);
+                    }
+                    if (sat.isChecked()) {
+                        setAlarm(7, calendar, am, intent, context);
+                    }else{
+                        cancelAlarm(7, am, intent, context);
+                    }
+                    if (sun.isChecked()) {
+                        setAlarm(1, calendar, am, intent, context);
+                    }else{
+                        cancelAlarm(1, am, intent, context);
+                    }
+                    Log.d("MyApp", String.valueOf(prefs.getInt("minute", 00)));
 
+            }
         });
-
-
-
 
         return root;
     }
 
+    private void setAlarm(int day, Calendar calendar, AlarmManager am, Intent intent, Context context) {
+        calendar.set(Calendar.DAY_OF_WEEK, day);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, day, intent, 0);
+        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    }
+    private void cancelAlarm(int day, AlarmManager am, Intent intent, Context context) {
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, day, intent, PendingIntent.FLAG_NO_CREATE);
+        if (pendingIntent != null && am != null) {
+            am.cancel(pendingIntent);
+        }
+    }
 
 
 

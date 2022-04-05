@@ -10,9 +10,17 @@
     <string name="bar_chart_date">14.-20 February</string>
     <string name="title_settings">Settings</string>
     <string name="email_subject_label">Name</string>
+    <string name="name_reg_label">To get started, let us know your name!</string>
+    <string name="welcome_2">You are now all set for a good night sleep!
+We will notify you 30 minutes before bed
+time to wind down. </string>
     <string name="bedtime_subject_label">Bedtime</string>
+    <string name="bedtime_reg">When do you want to go to sleep?</string>
+
     <string name="alarm">Alarm is set for these days:</string>
     <string name="label_checkboxes">Alarm</string>
+    <string name="label_checkboxes_reg">And for which days?</string>
+
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
@@ -36,4 +44,17 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="third_fragment_label">Third Fragment</string>
+
+    <string name="continue_btn">Continue</string>
+    <string name="continue_btn_2">Continue</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
 </resources>

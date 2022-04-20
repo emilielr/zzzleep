@@ -35,13 +35,13 @@ private FragmentSecondBinding binding;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         SharedPreferences.Editor editor = prefs.edit();
 
-        CheckBox mon = view.findViewById(R.id.checkbox_monday);
-        CheckBox tue = view.findViewById(R.id.checkbox_tuesday);
-        CheckBox wed = view.findViewById(R.id.checkbox_wednesday);
-        CheckBox thur = view.findViewById(R.id.checkbox_thursday);
-        CheckBox fri = view.findViewById(R.id.checkbox_friday);
-        CheckBox sat = view.findViewById(R.id.checkbox_saturday);
-        CheckBox sun = view.findViewById(R.id.checkbox_sunday);
+        CheckBox mon = view.findViewById(R.id.checkbox_monday2);
+        CheckBox tue = view.findViewById(R.id.checkbox_tuesday2);
+        CheckBox wed = view.findViewById(R.id.checkbox_wednesday2);
+        CheckBox thur = view.findViewById(R.id.checkbox_thursday2);
+        CheckBox fri = view.findViewById(R.id.checkbox_friday2);
+        CheckBox sat = view.findViewById(R.id.checkbox_saturday2);
+        CheckBox sun = view.findViewById(R.id.checkbox_sunday2);
 
         TimePicker time = view.findViewById(R.id.bedtime_reg);
 

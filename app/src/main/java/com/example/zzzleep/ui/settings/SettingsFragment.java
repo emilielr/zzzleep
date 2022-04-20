@@ -29,6 +29,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.zzzleep.R;
 import com.example.zzzleep.databinding.FragmentSettingsBinding;
 
+import java.lang.reflect.Array;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
@@ -56,6 +57,7 @@ public class SettingsFragment extends Fragment {
         CheckBox sat = root.findViewById(R.id.checkbox_saturday);
         CheckBox sun = root.findViewById(R.id.checkbox_sunday);
 
+
         mon.setChecked(prefs.getBoolean("monday", false));
         tue.setChecked(prefs.getBoolean("tuesday", false));
         wed.setChecked(prefs.getBoolean("wednesday", false));
@@ -72,7 +74,6 @@ public class SettingsFragment extends Fragment {
 
         time.setHour(prefs.getInt("hour", 00));
         time.setMinute(prefs.getInt("minute", 00));
-
 
 
 
@@ -145,7 +146,6 @@ public class SettingsFragment extends Fragment {
                     }else{
                         cancelAlarm(1, am, intent, context);
                     }
-                    Log.d("MyApp", String.valueOf(prefs.getInt("minute", 00)));
 
             }
         });

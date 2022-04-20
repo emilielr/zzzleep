@@ -174,11 +174,16 @@
             android:id="@+id/welcome"
             android:layout_width="379dp"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textFontWeight="700"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp"
             />
         <TextView
             android:id="@+id/textView5"
             android:layout_width="379dp"
             android:layout_height="wrap_content"
+            android:textSize="16dp"
             android:text="@string/welcome_2" />
     </LinearLayout>
 

@@ -1,5 +1,9 @@
 package com.example.zzzleep.ui.settings;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -8,15 +12,19 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.zzzleep.MainActivity;
 import com.example.zzzleep.R;
 import com.example.zzzleep.databinding.FragmentSecondBinding;
 import com.example.zzzleep.databinding.FragmentThirdBinding;
+
+import java.util.Calendar;
 
 public class ThirdFragment extends Fragment {
 
@@ -42,15 +50,66 @@ public class ThirdFragment extends Fragment {
 
         binding.buttonDone.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+
+                Boolean mon = prefs.getBoolean("monday", false) ;
+                Boolean tue = prefs.getBoolean("tuesday", false) ;
+                Boolean wed = prefs.getBoolean("wednesday", false);
+                Boolean thur = prefs.getBoolean("thursday", false);
+                Boolean fri = prefs.getBoolean("friday", false);
+                Boolean sat = prefs.getBoolean("saturday", false);
+                Boolean sun = prefs.getBoolean("sunday", false);
+
+                Context context = v.getContext();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+
+                calendar.set(Calendar.HOUR_OF_DAY, prefs.getInt("hour", 00));
+                calendar.set(Calendar.MINUTE, prefs.getInt("minute", 00));
+                calendar.set(Calendar.SECOND, 00);
+
+                AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent(context, AlarmReceiver.class);
+
+
+                if (mon) {
+                    setAlarm(2, calendar, am, intent, context);
+                }
+                if (tue) {
+                    setAlarm(3, calendar, am, intent, context);
+                }
+                if (wed) {
+                    setAlarm(4, calendar, am, intent, context);
+                }
+                if (thur) {
+                    setAlarm(5, calendar, am, intent, context);
+                }
+                if (fri) {
+                    setAlarm(6, calendar, am, intent, context);
+                }
+                if (sat) {
+                    setAlarm(7, calendar, am, intent, context);
+                }
+                if (sun) {
+                    setAlarm(1, calendar, am, intent, context);
+                }
+
                 editor.putBoolean("remember",  true);
-                NavHostFragment.findNavController(ThirdFragment.this)
-                        .navigate(R.id.action_ThirdFragment_to_Dashboard);
+                editor.apply();
+
+                Log.d("remember after", String.valueOf(prefs.getBoolean("remember", false)));
+                Intent intent2 = new Intent(binding.getRoot().getContext(), MainActivity.class);
+                startActivity(intent2);
             }
         });
 
-
     }
+    private void setAlarm(int day, Calendar calendar, AlarmManager am, Intent intent, Context context) {
+        calendar.set(Calendar.DAY_OF_WEEK, day);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, day, intent, 0);
+        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    }
+
 
     @Override
     public void onDestroyView() {

@@ -2,12 +2,10 @@ package com.example.zzzleep.ui.settings;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 
 import com.example.zzzleep.R;
@@ -32,7 +30,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     new NotificationCompat.Builder(context, CHANNEL_ID);
             builder.setContentTitle("Get ready for bed, " + name + "!");
             builder.setContentText("It's bedtime in 30 minutes");
-            builder.setSmallIcon(R.drawable.ic_android_black_24dp);
+            builder.setSmallIcon(R.drawable.ic_launcher_z_big_foreground);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME,

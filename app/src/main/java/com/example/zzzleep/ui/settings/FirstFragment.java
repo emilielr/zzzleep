@@ -3,6 +3,7 @@ package com.example.zzzleep.ui.settings;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +35,13 @@ private FragmentFirstBinding binding;
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         SharedPreferences.Editor editor = prefs.edit();
-
+        EditText setName = view.findViewById(R.id.name_reg);
 
         binding.buttonContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText setName = view.findViewById(R.id.name_reg);
-                editor.putString("name", String.valueOf(setName));
+                editor.putString("name", setName.getText().toString());
+                editor.apply();
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }

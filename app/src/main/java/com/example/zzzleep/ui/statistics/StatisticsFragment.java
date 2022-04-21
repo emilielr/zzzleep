@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.zzzleep.R;
 import com.example.zzzleep.databinding.FragmentStatisticsBinding;
@@ -38,13 +37,10 @@ public class StatisticsFragment extends Fragment {
     BarData barData;
     BarDataSet barDataSet;
 
-    ArrayList barEntriesArrayList;
+    ArrayList<BarEntry> barEntriesArrayList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        StatisticsViewModel homeViewModel =
-                new ViewModelProvider(this).get(StatisticsViewModel.class);
-
         binding = FragmentStatisticsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -114,7 +110,7 @@ public class StatisticsFragment extends Fragment {
 
 
     private void createFileData() {
-        ArrayList<SleepObject> sleepObjectsList = new ArrayList<SleepObject>();
+        ArrayList<SleepObject> sleepObjectsList = new ArrayList<>();
         SleepObject obj1 = new SleepObject("11-03-2022", 8);
         SleepObject obj2 = new SleepObject("12-03-2022", 3);
         SleepObject obj3 = new SleepObject("13-03-2022", 6);
@@ -152,14 +148,14 @@ public class StatisticsFragment extends Fragment {
         return dataList;
     }
 
-    public class RightYAxisFormatter extends ValueFormatter {
+    static public class RightYAxisFormatter extends ValueFormatter {
         @Override
         public String getFormattedValue(float value) {
             return ((int) value + "h");
         }
     }
 
-    public class XAxisFormatter extends ValueFormatter {
+    static public class XAxisFormatter extends ValueFormatter {
         final List<String> weekdays = Arrays.asList("mon.", "tue.", "wed.", "thur.", "fri", "sat.", "sun.");
         @Override
         public String getFormattedValue(float value) {

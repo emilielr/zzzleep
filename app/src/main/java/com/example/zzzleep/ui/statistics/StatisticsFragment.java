@@ -2,6 +2,7 @@ package com.example.zzzleep.ui.statistics;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StatisticsFragment extends Fragment {
+
 
     private FragmentStatisticsBinding binding;
 
@@ -117,7 +119,7 @@ public class StatisticsFragment extends Fragment {
         SleepObject obj4 = new SleepObject("14-03-2022", 5);
         SleepObject obj5 = new SleepObject("15-03-2022", 8);
         SleepObject obj6 = new SleepObject("16-03-2022", 7);
-        SleepObject obj7 = new SleepObject("17-03-2022", 7);
+        //SleepObject obj7 = new SleepObject("17-03-2022", 7);
 
         sleepObjectsList.add(obj1);
         sleepObjectsList.add(obj2);
@@ -125,11 +127,12 @@ public class StatisticsFragment extends Fragment {
         sleepObjectsList.add(obj4);
         sleepObjectsList.add(obj5);
         sleepObjectsList.add(obj6);
-        sleepObjectsList.add(obj7);
+        //sleepObjectsList.add(obj7);
 
         try (FileOutputStream fs = (getContext().openFileOutput("data.ser", Context.MODE_PRIVATE));
              ObjectOutputStream os = new ObjectOutputStream(fs)) {
             os.writeObject(sleepObjectsList);
+
         } catch (Exception e) {
             Log.e(this.getActivity().getLocalClassName(), "Exception writing file", e);
         }
@@ -147,6 +150,7 @@ public class StatisticsFragment extends Fragment {
         }
         return dataList;
     }
+
 
     static public class RightYAxisFormatter extends ValueFormatter {
         @Override
@@ -173,7 +177,8 @@ public class StatisticsFragment extends Fragment {
         barEntriesArrayList.add(new BarEntry(4f, data.get(3).getHours()));
         barEntriesArrayList.add(new BarEntry(5f, data.get(4).getHours()));
         barEntriesArrayList.add(new BarEntry(6f, data.get(5).getHours()));
-        barEntriesArrayList.add(new BarEntry(7f, data.get(6).getHours()));
+        //barEntriesArrayList.add(new BarEntry(7f, data.get(-1).getHours()));
+
     }
 
     @Override

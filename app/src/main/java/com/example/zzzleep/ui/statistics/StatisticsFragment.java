@@ -20,11 +20,14 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class StatisticsFragment extends Fragment {
 
@@ -115,15 +118,41 @@ public class StatisticsFragment extends Fragment {
     private void getBarEntries(ArrayList<SleepObject> data) {
         barEntriesArrayList = new ArrayList<>();
 
+        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
+
+        //xVals = new ArrayList<String>(Arrays.asList(bar_graph_names));
+        for(int i=0; i < data.size(); i++) {
+            BarEntry entry = new BarEntry(Float.valueOf(data.get(i).getHours()), i);
+            yVals.add(entry);
+        }
+        BarDataSet newSet = new BarDataSet(yVals, "DataSet");
+        BarData datanew = new BarData(xVals, newSet);
+        mChart.setData(datanew); //SKAL HA MED TROR JEG
+
+
         // adding new entry to our array list with bar
         // entry and passing x and y axis value to it.
-        barEntriesArrayList.add(new BarEntry(1f, data.get(0).getHours()));
-        barEntriesArrayList.add(new BarEntry(2f, data.get(1).getHours()));
-        barEntriesArrayList.add(new BarEntry(3f, data.get(2).getHours()));
-        barEntriesArrayList.add(new BarEntry(4f, data.get(3).getHours()));
-        barEntriesArrayList.add(new BarEntry(5f, data.get(4).getHours()));
-        barEntriesArrayList.add(new BarEntry(6f, data.get(5).getHours()));
-        barEntriesArrayList.add(new BarEntry(7f, data.get(6).getHours()));
+
+        Scanner scanner = new Scanner("data.ser");
+        Integer counter = 0;
+        while (scanner.hasNextLine()) {
+            counter ++;
+            String line = scanner.nextLine();
+            barEntriesArrayList.add(new BarEntry(counter++, data.get(counter++).getHours()));
+            // process the line
+
+        }
+
+            //barEntriesArrayList.add(new BarEntry(1f, data.get(0).getHours()));
+            //barEntriesArrayList.add(new BarEntry(2f, data.get(1).getHours()));
+            //barEntriesArrayList.add(new BarEntry(3f, data.get(2).getHours()));
+            //barEntriesArrayList.add(new BarEntry(4f, data.get(3).getHours()));
+            //barEntriesArrayList.add(new BarEntry(5f, data.get(4).getHours()));
+            //barEntriesArrayList.add(new BarEntry(6f, data.get(5).getHours()));
+            //barEntriesArrayList.add(new BarEntry(7f, data.get(6).getHours()));
+
+
     }
 
     @Override

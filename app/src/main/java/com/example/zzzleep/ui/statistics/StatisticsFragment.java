@@ -148,6 +148,7 @@ public class StatisticsFragment extends Fragment {
         } catch (Exception e) {
             Log.e(this.getActivity().getLocalClassName(), "Exception reading file", e);
         }
+        Log.d("daata", String.valueOf(dataList.size()));
         return dataList;
     }
 
@@ -173,25 +174,22 @@ public class StatisticsFragment extends Fragment {
     private void getBarEntries(ArrayList<SleepObject> data) {
         barEntriesArrayList = new ArrayList<>();
         List<String> xValues = Arrays.asList("1f", "2f", "3f", "4f", "5f", "6f", "7f");
-        List<String> dates = new ArrayList<>();
+        List<String> dates = new ArrayList<>(Arrays.asList("-", "-", "-", "-", "-", "-", "-"));
         int counter = 6;
         int dateCounter = 0;
         int dataSize = data.size();
 
-        Log.d("date", String.valueOf(dataSize));
-
         if (dataSize == 0) {
-            int i = 0;
-            while (i < 7) {
-                barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(i)), 0));
-                dates.add("-");
-                i++;
+            int x = 0;
+            while (x < 7) {
+                barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(x)), 0));
+                x++;
             }
         } else {
             // We want to display the 7 latest days
             // If we have more than 7 objects, we want to take the dates from the end of the list
             // If we have less than 7 objects, we want to get them from the start of the list
-            if (dataSize > 6) {
+            if (dataSize > 7) {
                 for (int i = dataSize - 1; i >= dataSize - 7; i--) {
                     barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(counter)), data.get(i).getHours()));
                     dates.add(dateCounter, data.get(i).getDate());
@@ -200,9 +198,9 @@ public class StatisticsFragment extends Fragment {
                 }
             }
             else {
-                for (int i = 0; i < 7; i++) {
-                    barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(counter)), data.get(i).getHours()));
-                    dates.add(dateCounter, data.get(i).getDate());
+                for (int i = 0; i < dataSize; i++) {
+                    barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(i)), data.get(i).getHours()));
+                    dates.add(i, data.get(i).getDate());
                     counter--;
                     dateCounter++;
                 }
@@ -211,8 +209,6 @@ public class StatisticsFragment extends Fragment {
 
             while (counter > -1) {
                 barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(counter)), 0));
-                dates.add(dateCounter, "");
-                dateCounter--;
                 counter--;
             }
 

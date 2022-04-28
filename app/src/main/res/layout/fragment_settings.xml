@@ -18,6 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:labelFor="@id/name"
+            android:textSize="18dp"
+            android:textFontWeight="700"
+            android:textColor="@color/black"
             android:text="@string/email_subject_label" />
 
         <EditText
@@ -30,6 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:labelFor="@id/bedtime_subject"
+            android:textSize="18dp"
+            android:textFontWeight="700"
+            android:textColor="@color/black"
             android:text="@string/bedtime_subject_label" />
 
         <TimePicker
@@ -41,6 +47,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textFontWeight="700"
+            android:textColor="@color/black"
             android:text="@string/alarm" />
 
 

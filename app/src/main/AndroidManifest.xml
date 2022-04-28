@@ -10,8 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Zzzleep">
         <activity
-            android:name=".TimerActivity" />
+            android:name=".MainActivity2"
             android:exported="false" />
+        <activity android:name=".TimerActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

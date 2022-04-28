@@ -48,7 +48,7 @@ public class StatisticsFragment extends Fragment {
 
         barChart = root.findViewById(R.id.barChart);
 
-        createFileData();
+        //createFileData();
         ArrayList<SleepObject> data = getFileData();
         getBarEntries(data);
 
@@ -159,25 +159,67 @@ public class StatisticsFragment extends Fragment {
         }
     }
 
-    static public class XAxisFormatter extends ValueFormatter {
-        final List<String> weekdays = Arrays.asList("mon.", "tue.", "wed.", "thur.", "fri", "sat.", "sun.");
+    public List<String> datesOnXAxis;
+
+    public class XAxisFormatter extends ValueFormatter {
+        //final List<String> weekdays = Arrays.asList("mon.", "tue.", "wed.", "thur.", "fri", "sat.", "sun.");
         @Override
         public String getFormattedValue(float value) {
-            return (weekdays.get((int) value - 1));
+            return (datesOnXAxis.get((int) value - 1));
         }
     }
 
 
     private void getBarEntries(ArrayList<SleepObject> data) {
         barEntriesArrayList = new ArrayList<>();
+        List<String> xValues = Arrays.asList("1f", "2f", "3f", "4f", "5f", "6f", "7f");
+        List<String> dates = new ArrayList<>();
+        int counter = 6;
+        int dateCounter = 0;
+        int dataSize = data.size();
 
-        barEntriesArrayList.add(new BarEntry(1f, data.get(0).getHours()));
-        barEntriesArrayList.add(new BarEntry(2f, data.get(1).getHours()));
-        barEntriesArrayList.add(new BarEntry(3f, data.get(2).getHours()));
-        barEntriesArrayList.add(new BarEntry(4f, data.get(3).getHours()));
-        barEntriesArrayList.add(new BarEntry(5f, data.get(4).getHours()));
-        barEntriesArrayList.add(new BarEntry(6f, data.get(5).getHours()));
-        //barEntriesArrayList.add(new BarEntry(7f, data.get(-1).getHours()));
+        Log.d("date", String.valueOf(dataSize));
+
+        if (dataSize == 0) {
+            int i = 0;
+            while (i < 7) {
+                barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(i)), 0));
+                dates.add("-");
+                i++;
+            }
+        } else {
+            // We want to display the 7 latest days
+            // If we have more than 7 objects, we want to take the dates from the end of the list
+            // If we have less than 7 objects, we want to get them from the start of the list
+            if (dataSize > 6) {
+                for (int i = dataSize - 1; i >= dataSize - 7; i--) {
+                    barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(counter)), data.get(i).getHours()));
+                    dates.add(dateCounter, data.get(i).getDate());
+                    dateCounter++;
+                    counter--;
+                }
+            }
+            else {
+                for (int i = 0; i < 7; i++) {
+                    barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(counter)), data.get(i).getHours()));
+                    dates.add(dateCounter, data.get(i).getDate());
+                    counter--;
+                    dateCounter++;
+                }
+            }
+
+
+            while (counter > -1) {
+                barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(counter)), 0));
+                dates.add(dateCounter, "");
+                dateCounter--;
+                counter--;
+            }
+
+        }
+
+        datesOnXAxis = dates;
+
 
     }
 

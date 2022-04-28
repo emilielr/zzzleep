@@ -12,6 +12,8 @@ import android.widget.Chronometer;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.zzzleep.R;
@@ -24,13 +26,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DashboardFragment extends Fragment implements View.OnClickListener {
+
+public class DashboardFragment extends Fragment implements View.OnClickListener{
     private View mView;
     private Button btnTimerStart, btnTimerEnd;
     private Chronometer timerHere;
 
     private FragmentDashboardBinding binding;
     private String datePattern = "dd-MM-yyyy";
+
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,8 +46,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-
 
         mView = inflater.inflate(R.layout.fragment_dashboard, container,false);
         btnTimerStart=(Button)mView.findViewById(R.id.counter_button_start);
@@ -70,9 +73,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         SleepObject o1 = new SleepObject(new SimpleDateFormat(datePattern).format(new Date()), (int) ((SystemClock.elapsedRealtime() - timerHere.getBase()) /1000));
         createFileData(o1); //lagrer timer her
 
+
         Log.d("MITT OBJEKT", o1.toString());
         Log.d("DETTE ER MITT OBJEKT", String.valueOf(o1.getHours()));
-
 
     }
 

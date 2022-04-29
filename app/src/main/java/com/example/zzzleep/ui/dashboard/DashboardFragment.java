@@ -80,7 +80,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
 
 
-    public void stopTimer(){
+    public void stopTimer() {
         timerHere.stop();
         btnTimerStart.animate().alpha(1);
         btnTimerEnd.animate().alpha(0);
@@ -94,8 +94,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         editor.apply();
 
         NavHostFragment.findNavController(DashboardFragment.this).navigate(R.id.action_timer);
-
-        }
 
     }
 

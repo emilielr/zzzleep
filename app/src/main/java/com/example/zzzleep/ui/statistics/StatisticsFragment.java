@@ -214,6 +214,9 @@ public class StatisticsFragment extends Fragment {
                 numObject++;
             }
         }
+        if (total == 0) {
+            return (float) 0;
+        }
         return total/numObject;
     }
 

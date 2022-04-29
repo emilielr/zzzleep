@@ -1,12 +1,11 @@
 package com.example.zzzleep.ui.statistics;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,15 +22,12 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class StatisticsFragment extends Fragment {
-
 
     private FragmentStatisticsBinding binding;
 
@@ -48,9 +44,18 @@ public class StatisticsFragment extends Fragment {
 
         barChart = root.findViewById(R.id.barChart);
 
-        //createFileData();
         ArrayList<SleepObject> data = getFileData();
-        getBarEntries(data);
+        ArrayList listOfLast7Days = getLast7Days(data);
+        getBarEntries(listOfLast7Days);
+
+        int totalSleep = calculateTotalSleep(listOfLast7Days);
+        float averageSleep = calculateAverageSleep(listOfLast7Days);
+
+        TextView totalSleepText = root.findViewById(R.id.total_time);
+        TextView averageSleepText = root.findViewById(R.id.average_time);
+
+        totalSleepText.setText(String.valueOf(totalSleep));
+        averageSleepText.setText(String.format("%.1f", averageSleep));
 
         barDataSet = new BarDataSet(barEntriesArrayList, "Hours of sleep");
 
@@ -65,7 +70,7 @@ public class StatisticsFragment extends Fragment {
         return root;
     }
 
-    // function for stying the outlook of the bar chart
+    // Function for stying the outlook of the bar chart
     private void initBarDataSet(BarDataSet barDataSet){
         barChart.setScaleEnabled(false);
         barChart.setTouchEnabled(false);
@@ -110,34 +115,6 @@ public class StatisticsFragment extends Fragment {
 
     }
 
-
-    private void createFileData() {
-        ArrayList<SleepObject> sleepObjectsList = new ArrayList<>();
-        SleepObject obj1 = new SleepObject("11-03-2022", 8);
-        SleepObject obj2 = new SleepObject("12-03-2022", 3);
-        SleepObject obj3 = new SleepObject("13-03-2022", 6);
-        SleepObject obj4 = new SleepObject("14-03-2022", 5);
-        SleepObject obj5 = new SleepObject("15-03-2022", 8);
-        SleepObject obj6 = new SleepObject("16-03-2022", 7);
-        //SleepObject obj7 = new SleepObject("17-03-2022", 7);
-
-        sleepObjectsList.add(obj1);
-        sleepObjectsList.add(obj2);
-        sleepObjectsList.add(obj3);
-        sleepObjectsList.add(obj4);
-        sleepObjectsList.add(obj5);
-        sleepObjectsList.add(obj6);
-        //sleepObjectsList.add(obj7);
-
-        try (FileOutputStream fs = (getContext().openFileOutput("data.ser", Context.MODE_PRIVATE));
-             ObjectOutputStream os = new ObjectOutputStream(fs)) {
-            os.writeObject(sleepObjectsList);
-
-        } catch (Exception e) {
-            Log.e(this.getActivity().getLocalClassName(), "Exception writing file", e);
-        }
-    }
-
     private ArrayList<SleepObject> getFileData() {
         ArrayList<SleepObject> dataList = new ArrayList<>();
 
@@ -148,7 +125,6 @@ public class StatisticsFragment extends Fragment {
         } catch (Exception e) {
             Log.e(this.getActivity().getLocalClassName(), "Exception reading file", e);
         }
-        Log.d("daata", String.valueOf(dataList.size()));
         return dataList;
     }
 
@@ -163,7 +139,6 @@ public class StatisticsFragment extends Fragment {
     public List<String> datesOnXAxis;
 
     public class XAxisFormatter extends ValueFormatter {
-        //final List<String> weekdays = Arrays.asList("mon.", "tue.", "wed.", "thur.", "fri", "sat.", "sun.");
         @Override
         public String getFormattedValue(float value) {
             return (datesOnXAxis.get((int) value - 1));
@@ -175,48 +150,74 @@ public class StatisticsFragment extends Fragment {
         barEntriesArrayList = new ArrayList<>();
         List<String> xValues = Arrays.asList("1f", "2f", "3f", "4f", "5f", "6f", "7f");
         List<String> dates = new ArrayList<>(Arrays.asList("-", "-", "-", "-", "-", "-", "-"));
-        int counter = 6;
-        int dateCounter = 0;
-        int dataSize = data.size();
 
-        if (dataSize == 0) {
-            int x = 0;
-            while (x < 7) {
-                barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(x)), 0));
-                x++;
-            }
-        } else {
-            // We want to display the 7 latest days
-            // If we have more than 7 objects, we want to take the dates from the end of the list
-            // If we have less than 7 objects, we want to get them from the start of the list
-            if (dataSize > 7) {
-                for (int i = dataSize - 1; i >= dataSize - 7; i--) {
-                    barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(counter)), data.get(i).getHours()));
-                    dates.add(dateCounter, data.get(i).getDate());
-                    dateCounter++;
-                    counter--;
-                }
-            }
-            else {
-                for (int i = 0; i < dataSize; i++) {
-                    barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(i)), data.get(i).getHours()));
-                    dates.add(i, data.get(i).getDate());
-                    counter--;
-                    dateCounter++;
-                }
-            }
-
-
-            while (counter > -1) {
-                barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(counter)), 0));
-                counter--;
-            }
-
+        for (int i = 0; i < data.size(); i++) {
+            barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(i)), data.get(i).getHours()));
+            dates.add(i, formatDate(data.get(i).getDate()));
         }
 
         datesOnXAxis = dates;
+    }
 
+    public ArrayList<SleepObject> getLast7Days(ArrayList<SleepObject> data) {
+        ArrayList<SleepObject> listOfLast7Days = new ArrayList<>();
+        SleepObject emptyObject = new SleepObject("", 0);
+        int counter = 0;
 
+        if (data.size() == 0) {
+            for (int i = 0; i < 7; i++) {
+                listOfLast7Days.add(emptyObject);
+            }
+            return listOfLast7Days;
+        }
+
+        if (data.size() > 7) {
+            // Take the 7 last objects from the data list
+            for (int i = data.size() - 1; i >= data.size() - 7; i--) {
+                listOfLast7Days.add(0, data.get(i));
+            }
+        } else {
+            // Take the <7 first objects
+            for (int i = 0; i < data.size(); i++) {
+                listOfLast7Days.add(data.get(i));
+                counter++;
+            }
+
+            while(counter < 7) {
+                listOfLast7Days.add(emptyObject);
+                counter++;
+            }
+        }
+        return listOfLast7Days;
+    }
+
+    public String formatDate(String date) {
+        String[] parts = date.split("-");
+        String day = parts[0];
+        String month = parts[1];
+        return String.format("%s/%s", day, month);
+    }
+
+    public Integer calculateTotalSleep(ArrayList<SleepObject> data) {
+        int total = 0;
+        for (SleepObject object : data) {
+            total += object.getHours();
+        }
+        return total;
+    }
+
+    public Float calculateAverageSleep(ArrayList<SleepObject> data) {
+        float total = calculateTotalSleep(data);
+        float numObject = 0;
+        for (SleepObject object : data) {
+            if (object.getDate() != "") {
+                numObject++;
+            }
+        }
+        if (total == 0) {
+            return (float) 0;
+        }
+        return total/numObject;
     }
 
     @Override

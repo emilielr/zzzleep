@@ -24,7 +24,9 @@ import com.example.zzzleep.databinding.FragmentDashboardBinding;
 import com.example.zzzleep.ui.goodmorning.GoodMorningFragment;
 import com.example.zzzleep.ui.statistics.SleepObject;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,7 +85,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         btnTimerStart.animate().alpha(1);
         btnTimerEnd.animate().alpha(0);
         SleepObject o1 = new SleepObject(new SimpleDateFormat(datePattern).format(new Date()), (int) ((SystemClock.elapsedRealtime() - timerHere.getBase()) /1000));
-        createFileData(o1); //lagrer timer her
+        createFileData(o1);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mView.getContext());
         SharedPreferences.Editor editor = prefs.edit();
@@ -93,14 +95,26 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
         NavHostFragment.findNavController(DashboardFragment.this).navigate(R.id.action_timer);
 
-        Log.d("MITT OBJEKT", o1.toString());
-        Log.d("DETTE ER MITT OBJEKT", String.valueOf(o1.getHours()));
-
+        }
 
     }
 
+    private ArrayList<SleepObject> getFileData() {
+        ArrayList<SleepObject> dataList = new ArrayList<>();
+
+        try (FileInputStream fi = (getContext().openFileInput("data.ser"));
+             ObjectInputStream os = new ObjectInputStream(fi)) {
+            dataList = (ArrayList<SleepObject>)os.readObject();
+
+        } catch (Exception e) {
+            Log.e(this.getActivity().getLocalClassName(), "Exception reading file", e);
+        }
+        return dataList;
+    }
+
+
     private void createFileData(SleepObject object){  //funksjonen som lagrer timer til data.ser filen
-        ArrayList<SleepObject> sleepObjectsList = new ArrayList<SleepObject>();
+        ArrayList<SleepObject> sleepObjectsList = getFileData();
         sleepObjectsList.add(object);
 
         try (FileOutputStream fs = (getContext().openFileOutput("data.ser", Context.MODE_PRIVATE));

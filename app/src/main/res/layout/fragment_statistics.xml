@@ -41,7 +41,7 @@
                     android:id="@+id/average_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/statistics_average_time"
+                    android:text=""
                     android:textAlignment="center"
                     android:textSize="16sp"
                     android:textStyle="bold" />

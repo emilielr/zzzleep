@@ -159,14 +159,14 @@ public class StatisticsFragment extends Fragment {
             if (dataSize > 7) {
                 for (int i = dataSize - 1; i >= dataSize - 7; i--) {
                     barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(counter)), data.get(i).getHours()));
-                    dates.add(dateCounter, data.get(i).getDate());
+                    dates.add(dateCounter, formatDate(data.get(i).getDate()));
                     dateCounter++;
                     counter--;
                 }
             } else {
                 for (int i = 0; i < dataSize; i++) {
                     barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(i)), data.get(i).getHours()));
-                    dates.add(i, data.get(i).getDate());
+                    dates.add(i, formatDate(data.get(i).getDate()));
                     counter--;
                     dateCounter++;
                 }
@@ -180,6 +180,13 @@ public class StatisticsFragment extends Fragment {
         }
 
         datesOnXAxis = dates;
+    }
+
+    public String formatDate(String date) {
+        String[] parts = date.split("-");
+        String day = parts[0];
+        String month = parts[1];
+        return String.format("%s/%s", day, month);
     }
 
     @Override

@@ -192,10 +192,13 @@ public class StatisticsFragment extends Fragment {
     }
 
     public String formatDate(String date) {
-        String[] parts = date.split("-");
-        String day = parts[0];
-        String month = parts[1];
-        return String.format("%s/%s", day, month);
+        if (date != "") {
+            String[] parts = date.split("-");
+            String day = parts[0];
+            String month = parts[1];
+            return String.format("%s/%s", day, month);
+        }
+        return "-";
     }
 
     public Integer calculateTotalSleep(ArrayList<SleepObject> data) {

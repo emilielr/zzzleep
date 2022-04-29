@@ -1,8 +1,6 @@
 package com.example.zzzleep.ui.statistics;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +21,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +44,6 @@ public class StatisticsFragment extends Fragment {
 
         barChart = root.findViewById(R.id.barChart);
 
-        //createFileData();
         ArrayList<SleepObject> data = getFileData();
         getBarEntries(data);
 
@@ -65,7 +60,7 @@ public class StatisticsFragment extends Fragment {
         return root;
     }
 
-    // function for stying the outlook of the bar chart
+    // Function for stying the outlook of the bar chart
     private void initBarDataSet(BarDataSet barDataSet){
         barChart.setScaleEnabled(false);
         barChart.setTouchEnabled(false);
@@ -110,34 +105,6 @@ public class StatisticsFragment extends Fragment {
 
     }
 
-
-    private void createFileData() {
-        ArrayList<SleepObject> sleepObjectsList = new ArrayList<>();
-        SleepObject obj1 = new SleepObject("11-03-2022", 8);
-        SleepObject obj2 = new SleepObject("12-03-2022", 3);
-        SleepObject obj3 = new SleepObject("13-03-2022", 6);
-        SleepObject obj4 = new SleepObject("14-03-2022", 5);
-        SleepObject obj5 = new SleepObject("15-03-2022", 8);
-        SleepObject obj6 = new SleepObject("16-03-2022", 7);
-        //SleepObject obj7 = new SleepObject("17-03-2022", 7);
-
-        sleepObjectsList.add(obj1);
-        sleepObjectsList.add(obj2);
-        sleepObjectsList.add(obj3);
-        sleepObjectsList.add(obj4);
-        sleepObjectsList.add(obj5);
-        sleepObjectsList.add(obj6);
-        //sleepObjectsList.add(obj7);
-
-        try (FileOutputStream fs = (getContext().openFileOutput("data.ser", Context.MODE_PRIVATE));
-             ObjectOutputStream os = new ObjectOutputStream(fs)) {
-            os.writeObject(sleepObjectsList);
-
-        } catch (Exception e) {
-            Log.e(this.getActivity().getLocalClassName(), "Exception writing file", e);
-        }
-    }
-
     private ArrayList<SleepObject> getFileData() {
         ArrayList<SleepObject> dataList = new ArrayList<>();
 
@@ -148,7 +115,6 @@ public class StatisticsFragment extends Fragment {
         } catch (Exception e) {
             Log.e(this.getActivity().getLocalClassName(), "Exception reading file", e);
         }
-        Log.d("daata", String.valueOf(dataList.size()));
         return dataList;
     }
 
@@ -163,7 +129,6 @@ public class StatisticsFragment extends Fragment {
     public List<String> datesOnXAxis;
 
     public class XAxisFormatter extends ValueFormatter {
-        //final List<String> weekdays = Arrays.asList("mon.", "tue.", "wed.", "thur.", "fri", "sat.", "sun.");
         @Override
         public String getFormattedValue(float value) {
             return (datesOnXAxis.get((int) value - 1));
@@ -185,7 +150,9 @@ public class StatisticsFragment extends Fragment {
                 barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(x)), 0));
                 x++;
             }
-        } else {
+        }
+
+        else {
             // We want to display the 7 latest days
             // If we have more than 7 objects, we want to take the dates from the end of the list
             // If we have less than 7 objects, we want to get them from the start of the list
@@ -196,8 +163,7 @@ public class StatisticsFragment extends Fragment {
                     dateCounter++;
                     counter--;
                 }
-            }
-            else {
+            } else {
                 for (int i = 0; i < dataSize; i++) {
                     barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(i)), data.get(i).getHours()));
                     dates.add(i, data.get(i).getDate());
@@ -205,7 +171,6 @@ public class StatisticsFragment extends Fragment {
                     dateCounter++;
                 }
             }
-
 
             while (counter > -1) {
                 barEntriesArrayList.add(new BarEntry(Float.parseFloat(xValues.get(counter)), 0));
@@ -215,8 +180,6 @@ public class StatisticsFragment extends Fragment {
         }
 
         datesOnXAxis = dates;
-
-
     }
 
     @Override

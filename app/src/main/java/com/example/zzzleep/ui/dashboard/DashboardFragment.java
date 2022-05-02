@@ -14,14 +14,11 @@ import android.widget.Chronometer;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.zzzleep.R;
 import com.example.zzzleep.databinding.FragmentDashboardBinding;
-import com.example.zzzleep.ui.goodmorning.GoodMorningFragment;
 import com.example.zzzleep.ui.statistics.SleepObject;
 
 import java.io.FileInputStream;
@@ -46,13 +43,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-
-
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
-
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
 
         mView = inflater.inflate(R.layout.fragment_dashboard, container,false);
         btnTimerStart=(Button)mView.findViewById(R.id.counter_button_start);
@@ -64,9 +55,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
 
         return mView;
-        //return root;
-
-
     }
 
 
@@ -111,7 +99,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     }
 
 
-    private void createFileData(SleepObject object){  //funksjonen som lagrer timer til data.ser filen
+    private void createFileData(SleepObject object){
         ArrayList<SleepObject> sleepObjectsList = getFileData();
         sleepObjectsList.add(object);
 
@@ -121,12 +109,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         } catch (Exception e) {
             Log.e(this.getActivity().getLocalClassName(), "Exception writing file", e);
         }
-
-    //SleepObject o1 = new SleepObject(new SimpleDateFormat(datePattern).format(new Date()), (int) ((SystemClock.elapsedRealtime() - timerHere.getBase()) /1000));
-    //createFileData(o1);
-}
-
-
+    }
 
     @Override
     public void onClick(View v) {
@@ -140,10 +123,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                 break;
         }
     }
-
-
-
-
 
     @Override
     public void onDestroyView() {

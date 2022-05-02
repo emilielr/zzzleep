@@ -1,7 +1,5 @@
 package com.example.zzzleep.ui.goodmorning;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -19,7 +17,6 @@ import com.example.zzzleep.R;
 
 public class GoodMorningFragment extends Fragment {
 
-    private GoodMorningViewModel mViewModel;
 
     public static GoodMorningFragment newInstance() {
         return new GoodMorningFragment();
@@ -40,13 +37,4 @@ public class GoodMorningFragment extends Fragment {
         String newSleep = prefs.getString("sleepHours", "0");
         sleep.setText("You got "+newSleep+" hours of sleep");
     }
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(GoodMorningViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }

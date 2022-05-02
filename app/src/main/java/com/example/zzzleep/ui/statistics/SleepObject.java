@@ -10,16 +10,8 @@ public class SleepObject implements Serializable {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public int getHours() {
         return hours;
-    }
-
-    public void setHours(int hours) {
-        this.hours = hours;
     }
 
     public SleepObject(String date, int hours) {

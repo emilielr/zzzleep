@@ -1,18 +1,12 @@
 package com.example.zzzleep.ui.settings;
 
-
 import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +16,12 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.zzzleep.R;
 import com.example.zzzleep.databinding.FragmentSettingsBinding;
 
-import java.lang.reflect.Array;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 public class SettingsFragment extends Fragment {
 

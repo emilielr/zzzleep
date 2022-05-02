@@ -3,12 +3,8 @@ package com.example.zzzleep;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-
-
 
 import com.example.zzzleep.ui.settings.RegisterActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -21,15 +17,13 @@ import com.example.zzzleep.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.zzzleep.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         Boolean remember = prefs.getBoolean("remember", false);
@@ -38,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(binding.getRoot().getContext(), RegisterActivity.class);
             startActivity(intent);
         }
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

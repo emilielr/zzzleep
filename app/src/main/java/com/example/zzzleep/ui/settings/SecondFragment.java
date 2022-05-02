@@ -21,7 +21,7 @@ private FragmentSecondBinding binding;
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
 
@@ -45,25 +45,21 @@ private FragmentSecondBinding binding;
 
         TimePicker time = view.findViewById(R.id.bedtime_reg);
 
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_ThirdFragment);
+        binding.buttonSecond.setOnClickListener(view1 -> {
+            NavHostFragment.findNavController(SecondFragment.this)
+                    .navigate(R.id.action_SecondFragment_to_ThirdFragment);
 
-                editor.putBoolean("monday", mon.isChecked());
-                editor.putBoolean("tuesday", tue.isChecked());
-                editor.putBoolean("wednesday", wed.isChecked());
-                editor.putBoolean("thursday", thur.isChecked());
-                editor.putBoolean("friday", fri.isChecked());
-                editor.putBoolean("saturday", sat.isChecked());
-                editor.putBoolean("sunday", sun.isChecked());
-                editor.putInt("minute",time.getMinute());
-                editor.putInt("hour",time.getHour());
-                editor.apply();
+            editor.putBoolean("monday", mon.isChecked());
+            editor.putBoolean("tuesday", tue.isChecked());
+            editor.putBoolean("wednesday", wed.isChecked());
+            editor.putBoolean("thursday", thur.isChecked());
+            editor.putBoolean("friday", fri.isChecked());
+            editor.putBoolean("saturday", sat.isChecked());
+            editor.putBoolean("sunday", sun.isChecked());
+            editor.putInt("minute",time.getMinute());
+            editor.putInt("hour",time.getHour());
+            editor.apply();
 
-
-            }
 
         });
     }

@@ -45,7 +45,7 @@ public class StatisticsFragment extends Fragment {
         barChart = root.findViewById(R.id.barChart);
 
         ArrayList<SleepObject> data = getFileData();
-        ArrayList listOfLast7Days = getLast7Days(data);
+        ArrayList<SleepObject> listOfLast7Days = getLast7Days(data);
         getBarEntries(listOfLast7Days);
 
         int totalSleep = calculateTotalSleep(listOfLast7Days);

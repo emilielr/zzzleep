@@ -14,7 +14,6 @@ import android.widget.Chronometer;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.zzzleep.R;
@@ -35,10 +34,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private Chronometer timerHere;
 
     private FragmentDashboardBinding binding;
-    private String datePattern = "dd-MM-yyyy";
-
-
-
+    final private String datePattern = "dd-MM-yyyy";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,9 +42,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
 
         mView = inflater.inflate(R.layout.fragment_dashboard, container,false);
-        btnTimerStart=(Button)mView.findViewById(R.id.counter_button_start);
-        btnTimerEnd=(Button)mView.findViewById(R.id.counter_button_end);
-        timerHere=(Chronometer) mView.findViewById(R.id.timerHere);
+        btnTimerStart = mView.findViewById(R.id.counter_button_start);
+        btnTimerEnd = mView.findViewById(R.id.counter_button_end);
+        timerHere = mView.findViewById(R.id.timerHere);
         btnTimerStart.setOnClickListener(this);
         btnTimerEnd.setOnClickListener(this);
 

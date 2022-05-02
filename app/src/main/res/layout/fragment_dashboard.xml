@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="0dp"
-            android:background="@color/blue_background"
-            tools:context=".ui.dashboard.DashboardFragment"
-            android:id="@+id/dashboard_layout"
-            >
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dashboard_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_background"
+    tools:context=".ui.dashboard.DashboardFragment">
 
     <Chronometer
         android:id="@+id/timerHere"
         android:layout_width="wrap_content"
-        android:layout_height="438dp"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="204dp"
+        android:layout_height="250dp"
         android:textColor="#FFF"
         android:textSize="62sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button

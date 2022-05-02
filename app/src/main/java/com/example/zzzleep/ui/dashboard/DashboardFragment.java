@@ -45,6 +45,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         btnTimerStart = mView.findViewById(R.id.counter_button_start);
         btnTimerEnd = mView.findViewById(R.id.counter_button_end);
         timerHere = mView.findViewById(R.id.timerHere);
+        btnTimerEnd.animate().alpha(0);
         btnTimerStart.setOnClickListener(this);
         btnTimerEnd.setOnClickListener(this);
 

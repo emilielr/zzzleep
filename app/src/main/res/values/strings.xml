@@ -13,7 +13,7 @@
     <string name="welcome_2">You are now all set for a good night sleep!
 We will notify you 30 minutes before bed
 time to wind down. </string>
-    <string name="bedtime_subject_label">Bedtime</string>
+    <string name="bedtime_subject_label">Set alarm</string>
     <string name="bedtime_reg">When do you want to go to sleep?</string>
 
     <string name="alarm">Alarm is set for these days:</string>
